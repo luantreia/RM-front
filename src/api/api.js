@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api';
 
 const fetchWithAuth = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
@@ -33,13 +33,21 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
-    }).then(r => r.json()),
+    }).then(async r => {
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Error en el login');
+      return data;
+    }),
     
     register: (body) => fetch(`${API_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
-    }).then(r => r.json())
+    }).then(async r => {
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Error en el registro');
+      return data;
+    })
   },
   
   ejercicios: {
