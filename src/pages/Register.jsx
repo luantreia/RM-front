@@ -46,6 +46,7 @@ const Register = () => {
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
               required 
+              autoComplete="email"
             />
           </div>
           <div>
@@ -57,6 +58,7 @@ const Register = () => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               required 
+              autoComplete="new-password"
             />
           </div>
           <button type="submit" className="btn-primary w-full py-3 mt-4">
